@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#characters-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.character-card {
+    border: 1px solid #eee;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    text-align: center;
+    width: 200px;
+}
+
+.character-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.character-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
