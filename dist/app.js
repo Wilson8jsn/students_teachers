@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const fetchURL = 'http://localhost:8081/persona';
+const fetchURL = 'http://localhost:8081/assistant';
 // Interface describing the shape of our json data
 const postData = {
     nombre: "TESTS",
