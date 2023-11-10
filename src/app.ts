@@ -1,5 +1,5 @@
 const fetchURL = 'http://localhost:8081/assistant'
-// Interface describing the shape of our json data
+
 
 
 
@@ -11,7 +11,7 @@ const postData = {
 const requestOptions: RequestInit = {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json', // Ajusta según el tipo de datos que estás enviando
+    'Content-Type': 'application/json', 
   },
   body: JSON.stringify(postData),
 };
