@@ -8,44 +8,69 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const url = 'https://rickandmortyapi.com/api/character';
-const container = document.getElementById('characters-container');
-function fetchCharacters() {
+const fetchURL = 'http://localhost:8081/persona';
+// Interface describing the shape of our json data
+const postData = {
+    nombre: "TESTS",
+    edad: 20,
+    estudiante: true
+};
+const requestOptions = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json', // Ajusta según el tipo de datos que estás enviando
+    },
+    body: JSON.stringify(postData),
+};
+fetch(fetchURL, requestOptions)
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+})
+    .then(data => {
+    console.log('Respuesta exitosa:', data);
+})
+    .catch(error => {
+    console.error('Error:', error);
+});
+function fetchPosts(url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(url);
+            let response = yield fetch(url);
             if (!response.ok) {
-                throw new Error('No se pudo obtener la información de los personajes');
+                throw new Error('La respuesta no fue bien recibida');
             }
-            const data = yield response.json();
-            console.log('API Response:', data);
-            if (data.results && Array.isArray(data.results)) {
-                displayCharacters(data.results);
-            }
-            else {
-                console.error('La estructura de datos desde la API es inesperada:', data);
-            }
+            return yield response.json();
         }
         catch (error) {
-            console.error('Error al obtener los personajes:', error);
+            console.log('Peticion Incorrecta Probablemente');
         }
     });
 }
+function showPost() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let posts = yield fetchPosts(fetchURL);
+        displayCharacters(posts);
+    });
+}
 function displayCharacters(characters) {
+    if (characters == undefined)
+        return;
+    console.log(characters.id);
+    const container = document.getElementById('characterContainer');
     if (container) {
-        container.innerHTML = '';
-        characters.forEach(character => {
-            console.log('Imagen URL:', character.img);
-            const characterCard = document.createElement('div');
-            characterCard.classList.add('character-card');
-            characterCard.innerHTML = `
-            <img src="${character.img}" alt="${character.name}" onerror="this.onerror=null; this.src='imágenes/default-image.jpg';">
-
-             <h2>${character.name}</h2>
-             <p>${character.species}</p>
+        for (let elements of characters) {
+            container.innerHTML += `
+            <div class="character-card">
+            <h2> ID: "${elements.id}"</h2>
+            <h3> Nombres: "${elements.nombre}"</h3>
+            <p> Edad: "${elements.edad}"</p>
+            <p> Esta Estudiando:"${elements.estudiante === true ? "Si" : "No"}"</p>
+            </div>
             `;
-            container.appendChild(characterCard);
-        });
+        }
     }
 }
-fetchCharacters();
+showPost();
